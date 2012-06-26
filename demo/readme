@@ -1,0 +1,5 @@
+Start app with loggers:
+ python __init__.py
+
+Start web app:
+ python ../web/webagent.py --settings=demosettings.conf

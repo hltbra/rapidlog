@@ -16,7 +16,8 @@ import tornado.httpserver
 import tornado.ioloop
 import tornado.web
 import tornado.websocket
-from tornado.options import options, define
+from tornado.options import options, define, parse_config_file,\
+     parse_command_line
 
 import pika
 from pika.adapters.tornado_connection import TornadoConnection
@@ -25,12 +26,20 @@ PROJECT_ROOT = os.path.abspath(\
     os.path.join(os.path.abspath(os.path.split(__file__)[0]), '..', '..')\
     )
 
+define("settings", default=None, help="settings file")
+
 define("port", default=8000, type=int, help="run on the given port")
 define("queue_name", default="logging", help="Logging queue name")
 define("queue_host", default="127.0.0.1", help="Host for amqp daemon")
 define("queue_port", default=5672, help="amqp server port")
 define("queue_user", default="guest", help="User for amqp daemon")
 define("queue_pasw", default="guest", help="Password for amqp daemon")
+define("loggers", default=[], help="Loggers to watch")
+
+parse_command_line()
+# Use settings conf or default file
+parse_config_file(options.settings or os.path.join('..', 'settings.conf'))
+
 
 from uuid import uuid1
 # Unique keys generator
@@ -101,7 +110,7 @@ class IndexView(tornado.web.RequestHandler):
     Rendering index page
     '''
     def get(self):
-        self.render("index.html", loggers=['rapid'])
+        self.render("index.html", loggers=options.loggers)
 
 
 class TornadoWebServer(tornado.web.Application):

@@ -47,7 +47,7 @@ class RabbitHandler(logging.Handler):
         try:
             con = BlockingConnection(ConnectionParameters(self.host))
         except socket.error:
-            raise RabbitConnectionException, 'Connection to {0} falled'.format(\
+            raise RabbitConnectionException, 'Connection to {0} failed'.format(\
                 self.host)
         channel = con.channel()
 
