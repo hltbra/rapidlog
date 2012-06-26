@@ -32,7 +32,8 @@ cfg = {
         'rabbit': {
             'class': 'rapidlog.handlers.RabbitHandler',
             'host': 'localhost',
-            'queue': 'logging'
+            'queue': 'logging',
+            'formatter': 'timed'
         },
         'console': {
             'class': 'logging.StreamHandler',

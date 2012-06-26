@@ -12,6 +12,7 @@ import logging
 import simplejson
 import socket
 
+from datetime import datetime
 from pika.adapters import BlockingConnection
 from pika.connection import ConnectionParameters
 
@@ -38,8 +39,9 @@ class RabbitHandler(logging.Handler):
 
         body = simplejson.dumps({
             'msg': msg,
+            'loggername': record.name,
             'level': record.levelname,
-            'created': record.created
+            'created': datetime.now().isoformat()
         })
 
         try:
