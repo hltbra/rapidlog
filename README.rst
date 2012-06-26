@@ -21,4 +21,4 @@ Quick start
 
 ::
 
-$ python webagent.py /[--settings=<settings file>/]
+$ python webagent.py [--settings=<settings file>]
