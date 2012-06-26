@@ -9,8 +9,10 @@ layer for delivering messages.
 Install requirements
 --------------------
 We strongly recommend use virtualenv. For installing env,
-please use: ::
-pip install -r requirements.txt
+please use:
+::
+
+$ pip install -r requirements.txt
 
 Quick start
 -----------
@@ -18,4 +20,5 @@ Quick start
 - Start your web application:
 
 ::
+
 $ python webagent.py /[--settings=<settings file>/]
