@@ -50,10 +50,11 @@ cfg = {
 
 
 # Use dict-like config PEP 381
-import dictconfig
+from rapidlog.demo import dictconfig
 dictconfig.dictConfig(cfg)
 
-import logging
-logger = logging.getLogger(name='rapid')
+if __name__ == '__main__':
+    import logging
+    logger = logging.getLogger(name='rapid')
 
-logger.info('test rapid tests')
+    logger.info('test rapid tests')

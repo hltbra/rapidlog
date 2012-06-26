@@ -10,9 +10,13 @@ Special handlers writes to RabbitQueue
 
 import logging
 import simplejson
+import socket
 
 from pika.adapters import BlockingConnection
 from pika.connection import ConnectionParameters
+
+class RabbitConnectionException(Exception):
+    pass
 
 class RabbitHandler(logging.Handler):
     '''
@@ -23,6 +27,7 @@ class RabbitHandler(logging.Handler):
     def __init__(self, *args, **kwargs):
         self.host = kwargs.pop('host') or 'localhost'
         self.queue = kwargs.pop('queue') or 'logging'
+        self.quiet = kwargs.pop('quiet', False)
 
         # old style class __init__
         logging.Handler.__init__(self, *args, **kwargs)
@@ -37,7 +42,11 @@ class RabbitHandler(logging.Handler):
             'created': record.created
         })
 
-        con = BlockingConnection(ConnectionParameters(self.host))
+        try:
+            con = BlockingConnection(ConnectionParameters(self.host))
+        except socket.error:
+            raise RabbitConnectionException, 'Connection to {0} falled'.format(\
+                self.host)
         channel = con.channel()
 
         channel.queue_declare(queue=self.queue, durable=True,
@@ -45,5 +54,5 @@ class RabbitHandler(logging.Handler):
 
         channel.basic_publish(exchange='',\
                               routing_key=self.queue,\
-                              body=msg)
+                              body=body)
         con.close()
