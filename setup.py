@@ -8,7 +8,7 @@ setup(
     author_email='r.muslimov@gmail.com',
     version='0.1',
     url='https://github.com/rmuslimov/rapidlog',
-    py_modules=['handlers.rabbit', 'web.webagent'],
+    packages=['rapidlog', 'rapidlog.handlers', 'rapidlog.web'],
     description='Handler for logging, and simple web client on tornado',
     entry_points={
         'console_scripts': [

@@ -120,10 +120,10 @@ class TornadoWebServer(tornado.web.Application):
             (r"/ws", WebSocket),
             )
 
-        relative = lambda x: os.path.join(os.path.dirname(__file__), x)
+        #relative = lambda x: os.path.join(os.path.dirname(__file__), x)
         settings = dict(
-            template_path=relative('templates'),
-            static_path=relative("static"),
+            template_path='templates',
+            static_path="static",
             debug=True
         )
 
