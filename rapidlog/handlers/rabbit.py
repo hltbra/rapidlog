@@ -9,7 +9,7 @@ Special handlers writes to RabbitQueue
 '''
 
 import logging
-import simplejson
+import json
 import socket
 
 from datetime import datetime
@@ -38,7 +38,7 @@ class RabbitHandler(logging.Handler):
     def emit(self, record):
         msg = self.format(record)
 
-        body = simplejson.dumps({
+        body = json.dumps({
             'msg': msg,
             'loggername': record.name,
             'level': record.levelname,

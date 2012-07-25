@@ -8,15 +8,8 @@ Tests of rapidlog
 
 '''
 
-import os
-import sys
-
-# Setup env
-project_path = os.path.abspath(__file__).split()[0]
-sys.path.insert(0, os.path.abspath(
-    os.path.join(project_path, '..', '..', '..')
-    ))
-
+from logging import config as _config
+import logging
 
 cfg = {
     'version': 1,
@@ -49,7 +42,8 @@ cfg = {
 }
 
 if __name__ == '__main__':
-    import logging
-    logger = logging.getLogger(name='rapid')
+    # setup logging conf
+    _config.dictConfig(cfg)
 
+    logger = logging.getLogger(name='rapid')
     logger.info('test rapid tests')

@@ -1,7 +1,7 @@
 #!
 
 from glob import glob
-from distutils.core import setup
+from setuptools import setup
 
 setup(
     name='rapidlog',
