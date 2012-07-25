@@ -22,6 +22,11 @@ setup(
                 ('rapidlog/web/static/images', glob('rapidlog/web/static/images/*')),
                 ('rapidlog/web/static/js', glob('rapidlog/web/static/js/*')),
                 ],
+    install_requires=[
+        'pika>=0.9.5',
+        'tornado>=2.3',
+        'wsgiref>=0.1.2',
+    ],
     classifiers=[
         'License :: OSI Approved :: BSD License',
         'Programming Language :: Python'
