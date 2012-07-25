@@ -2,24 +2,32 @@
 Rapidlog utility
 ================
 
-Rapid log is special handler for python logging
-module, uses RabbitMq as transport layer. For displaing
-messages it uses Tornado+Pika application, and websockets
-layer for delivering messages.
+Rapidlog is simple handler for standard python logging package, and simple web agent (rapidagent) displaing
+messages. Messages delivered asyncroniously over RabbitMq server. Rapidagent uses pika+Tornado loop for async messaging.
 
-Install requirements
---------------------
-We strongly recommend use virtualenv. For installing env,
-please use:
+
+Installation
+------------
+
 ::
 
-$ pip install -r requirements.txt
+  $ pip install rapidlog
+
+
 
 Quick start
 -----------
-- Please take a look for demo project in ./demo path.
-- Start your web application:
+- Start rapidagent web server:
 
 ::
 
-$ python webagent.py [--settings=<settings file>]
+  $ rapidagent [settings file]
+
+If you will use rapidlog handlers, you will see messages in this pages. Easier way is
+
+::
+
+  $ cd examples
+  $ python app.py
+
+Take a look logging configuration, and rapidagent.conf file.
