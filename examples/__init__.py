@@ -1,7 +1,7 @@
 #! coding:utf-8
 '''
 
-Tests of rapidlog
+Simple loggers with rapidlog handlers of rapidlog
 
 @author: rmuslimov
 @date: 24.06.2012
@@ -46,4 +46,6 @@ if __name__ == '__main__':
     _config.dictConfig(cfg)
 
     logger = logging.getLogger(name='rapid')
-    logger.info('test rapid tests')
+    logger.info('hello world')
+    logger.warn('hello world')
+    logger.error('hello world')

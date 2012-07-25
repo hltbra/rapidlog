@@ -30,10 +30,10 @@ define("queue_user", default="guest", help="User for amqp daemon")
 define("queue_pasw", default="guest", help="Password for amqp daemon")
 define("loggers", default=[], help="Loggers to watch")
 
-parse_command_line()
-
 # Unique keys generator
-genid = lambda _: str(uuid1())[:7]
+genid = lambda : str(uuid1())[:7]
+if (len(sys.argv) > 1):
+    parse_config_file(sys.argv[1])
 
 
 class WebSocketsManager(object):
@@ -102,6 +102,7 @@ class IndexView(tornado.web.RequestHandler):
     Rendering index page
     '''
     def get(self):
+        print '!', options.loggers
         self.render("index.html", loggers=options.loggers)
 
 
