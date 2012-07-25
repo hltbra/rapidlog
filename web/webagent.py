@@ -6,25 +6,18 @@ Simple tornado app for handling messages from RabbitMq
 @date: 26.06.2012
 
 '''
-
-
 import os
-import sys
+from uuid import uuid1
 
-
+import pika
 import tornado.httpserver
 import tornado.ioloop
 import tornado.web
 import tornado.websocket
+from pika.adapters.tornado_connection import TornadoConnection
 from tornado.options import options, define, parse_config_file,\
      parse_command_line
 
-import pika
-from pika.adapters.tornado_connection import TornadoConnection
-
-PROJECT_ROOT = os.path.abspath(\
-    os.path.join(os.path.abspath(os.path.split(__file__)[0]), '..', '..')\
-    )
 
 define("settings", default=None, help="settings file")
 
@@ -37,13 +30,9 @@ define("queue_pasw", default="guest", help="Password for amqp daemon")
 define("loggers", default=[], help="Loggers to watch")
 
 parse_command_line()
-# Use settings conf or default file
-parse_config_file(options.settings or os.path.join('..', 'settings.conf'))
 
-
-from uuid import uuid1
 # Unique keys generator
-genid = lambda : str(uuid1())[:7]
+genid = lambda _: str(uuid1())[:7]
 
 
 class WebSocketsManager(object):
@@ -63,6 +52,7 @@ class WebSocketsManager(object):
     def process_message(self, message):
         for each in self.sockets.itervalues():
             each.write_message(message)
+
 
 class RabbitClient(object):
     '''
@@ -105,6 +95,7 @@ class WebSocket(tornado.websocket.WebSocketHandler):
         app = self.application
         app.wmanager.close_socket(self.idx)
 
+
 class IndexView(tornado.web.RequestHandler):
     '''
     Rendering index page
@@ -131,12 +122,12 @@ class TornadoWebServer(tornado.web.Application):
 
         relative = lambda x: os.path.join(os.path.dirname(__file__), x)
         settings = dict(
-            template_path = relative('templates'),
-            static_path = relative("static"),
+            template_path=relative('templates'),
+            static_path=relative("static"),
             debug=True
         )
 
-        tornado.web.Application.__init__(self,handlers, **settings)
+        tornado.web.Application.__init__(self, handlers, **settings)
 
     def initManagers(self):
         self.rmanager = RabbitClient(self)

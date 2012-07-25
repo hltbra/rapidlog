@@ -21,7 +21,6 @@ sys.path.insert(0, os.path.abspath(
 cfg = {
     'version': 1,
     'disable_existing_loggers': False,
-    'filters': {},
     'formatters': {
         'timed': {
             'format': '[%(asctime)s %(levelname)s] %(message)s',
@@ -48,11 +47,6 @@ cfg = {
         }
     }
 }
-
-
-# Use dict-like config PEP 381
-from rapidlog.demo import dictconfig
-dictconfig.dictConfig(cfg)
 
 if __name__ == '__main__':
     import logging

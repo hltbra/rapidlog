@@ -1,6 +1,7 @@
 ================
 Rapidlog utility
 ================
+
 Rapid log is special handler for python logging
 module, uses RabbitMq as transport layer. For displaing
 messages it uses Tornado+Pika application, and websockets

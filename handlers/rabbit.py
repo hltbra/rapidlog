@@ -16,8 +16,10 @@ from datetime import datetime
 from pika.adapters import BlockingConnection
 from pika.connection import ConnectionParameters
 
+
 class RabbitConnectionException(Exception):
     pass
+
 
 class RabbitHandler(logging.Handler):
     '''
@@ -33,7 +35,6 @@ class RabbitHandler(logging.Handler):
         # old style class __init__
         logging.Handler.__init__(self, *args, **kwargs)
 
-
     def emit(self, record):
         msg = self.format(record)
 
@@ -47,8 +48,8 @@ class RabbitHandler(logging.Handler):
         try:
             con = BlockingConnection(ConnectionParameters(self.host))
         except socket.error:
-            raise RabbitConnectionException, 'Connection to {0} failed'.format(\
-                self.host)
+            raise RabbitConnectionException('Connection to {0} failed'.format(\
+                self.host))
         channel = con.channel()
 
         channel.queue_declare(queue=self.queue, durable=True,
