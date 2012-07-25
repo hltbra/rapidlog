@@ -1,6 +1,7 @@
 #!
 
-from setuptools import setup
+from glob import glob
+from distutils.core import setup
 
 setup(
     name='rapidlog',
@@ -12,10 +13,15 @@ setup(
     description='Handler for logging, and simple web client on tornado',
     entry_points={
         'console_scripts': [
-            'rapidagent = web.webagent:main'
+            'rapidagent = rapidlog.web.webagent:main'
             ],
         },
-    zip_zafe=False,
+    include_package_data=True,
+    data_files=[('rapidlog/web/templates', ['rapidlog/web/templates/index.html']),
+                ('rapidlog/web/static/css', glob('rapidlog/web/static/css/*')),
+                ('rapidlog/web/static/images', glob('rapidlog/web/static/images/*')),
+                ('rapidlog/web/static/js', glob('rapidlog/web/static/js/*')),
+                ],
     classifiers=[
         'License :: OSI Approved :: BSD License',
         'Programming Language :: Python'

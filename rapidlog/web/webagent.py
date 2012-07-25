@@ -7,6 +7,7 @@ Simple tornado app for handling messages from RabbitMq
 
 '''
 import os
+import sys
 from uuid import uuid1
 
 import pika
@@ -120,10 +121,23 @@ class TornadoWebServer(tornado.web.Application):
             (r"/ws", WebSocket),
             )
 
-        #relative = lambda x: os.path.join(os.path.dirname(__file__), x)
+        tplpath = os.path.join('rapidlog', 'web', 'templates')
+        if not os.path.exists(tplpath):
+            tplpath = os.path.join(sys.prefix, tplpath)
+            print tplpath
+            if (not os.path.exists(tplpath)):
+                raise Exception('Can\'t find templates path')
+
+        statpath = os.path.join('rapidlog', 'web', 'static')
+        if not os.path.exists(statpath):
+            statpath = os.path.join(sys.prefix, statpath)
+            if (not os.path.exists(statpath)):
+                print statpath
+                raise Exception('Can\'t find static path')
+
         settings = dict(
-            template_path='templates',
-            static_path="static",
+            template_path=tplpath,
+            static_path=statpath,
             debug=True
         )
 
@@ -134,12 +148,12 @@ class TornadoWebServer(tornado.web.Application):
         self.wmanager = WebSocketsManager()
 
 
-if __name__ == '__main__':
+def main():
     # Set our pika.log options
     pika.log.setup(color=True)
 
     #Tornado Application
-    pika.log.info("Initializing RapidLogs Tornado...")
+    pika.log.info("Initializing rapidlog webagent...")
 
     app = TornadoWebServer()
     http_server = tornado.httpserver.HTTPServer(app)
@@ -153,3 +167,6 @@ if __name__ == '__main__':
 
     # Start the IOLoop
     ioloop.start()
+
+if __name__ == '__main__':
+    main()
