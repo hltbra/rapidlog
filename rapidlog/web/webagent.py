@@ -122,13 +122,13 @@ class TornadoWebServer(tornado.web.Application):
             (r"/ws", WebSocket),
             )
 
-        tplpath = os.path.join('rapidlog', 'web', 'templates')
+        tplpath = os.path.join('templates')
         if not os.path.exists(tplpath):
             tplpath = os.path.join(sys.prefix, tplpath)
             if (not os.path.exists(tplpath)):
                 raise Exception('Can\'t find templates path for rapidagent')
 
-        statpath = os.path.join('rapidlog', 'web', 'static')
+        statpath = os.path.join('static')
         if not os.path.exists(statpath):
             statpath = os.path.join(sys.prefix, statpath)
             if (not os.path.exists(statpath)):
