@@ -11,7 +11,7 @@ Installation
 
 ::
 
-  $ pip install rapidlog
+  $ python setup.py install
 
 
 
@@ -23,7 +23,7 @@ Start rapidagent web server:
 
   $ rapidagent [settings file]
 
-Now web-server avaliable on localhost:6673
+Now web-server avaliable on localhost:6673.
 If you will use rapidlog handlers, you will see messages in this pages. Easier way is
 
 ::
